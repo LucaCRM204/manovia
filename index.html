@@ -155,7 +155,7 @@ a{color:inherit;text-decoration:none}
 /* ---------- catálogo ---------- */
 .catalogo{padding-top:44px;padding-bottom:56px}
 @media (min-width:900px){ .catalogo{padding-top:72px;padding-bottom:96px} }
-.filtros{display:flex;gap:17px;align-items:baseline;flex-wrap:wrap;margin-bottom:18px}
+.filtros{display:flex;gap:14px;row-gap:8px;align-items:baseline;flex-wrap:wrap;margin-bottom:18px}
 @media (min-width:760px){ .filtros{gap:24px} }
 .filtro{font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:500;color:var(--gris);padding:4px 0;border-bottom:1px solid transparent;transition:color .15s}
 .filtro:hover{color:var(--bordo-900)}
@@ -216,6 +216,26 @@ a{color:inherit;text-decoration:none}
 }
 .squad__pie{margin-top:26px;font-size:12.5px;color:var(--gris)}
 .squad__pie button{text-decoration:underline;color:var(--bordo)}
+
+/* ---------- quiénes somos ---------- */
+.nosotros{padding-top:54px;padding-bottom:62px}
+@media (min-width:900px){ .nosotros{padding-top:88px;padding-bottom:100px} }
+.nosotros__grilla{display:grid;gap:26px}
+@media (min-width:900px){
+  .nosotros__grilla{grid-template-columns:1.15fr .85fr;gap:60px;align-items:start}
+}
+.nosotros__foto{order:-1;aspect-ratio:4/5;overflow:hidden;background:var(--hueso)}
+@media (min-width:900px){ .nosotros__foto{order:0;position:sticky;top:calc(var(--nav-h) + 28px)} }
+.nosotros__caja{max-width:60ch}
+.nosotros h2{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(28px,6vw,44px);line-height:1.04;margin-top:26px;
+}
+.nosotros p{margin-top:17px;font-size:15.5px;line-height:1.72;color:var(--bordo-900)}
+.nosotros p:first-of-type{font-size:17px}
+.nosotros .firma{
+  margin-top:28px;font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--rosa);
+}
 
 /* ---------- editorial ---------- */
 .taller{position:relative;min-height:78vh;display:flex;align-items:flex-end;overflow:hidden}
@@ -430,6 +450,7 @@ a{color:inherit;text-decoration:none}
         <a href="#catalogo" data-ir="mujer">Mujer</a>
         <a href="#catalogo" data-ir="hombre">Hombre</a>
         <a href="#catalogo" data-ir="portalipstick">Portalipstick</a>
+        <a href="#catalogo" data-ir="billetera">Billeteras</a>
         <a href="#taller">El taller</a>
       </nav>
     </div>
@@ -457,7 +478,9 @@ a{color:inherit;text-decoration:none}
     <a href="#catalogo" data-ir="mujer">Mujer</a>
     <a href="#catalogo" data-ir="hombre">Hombre</a>
     <a href="#catalogo" data-ir="portalipstick">Portalipstick</a>
+    <a href="#catalogo" data-ir="billetera">Billeteras</a>
     <a href="#taller">El taller</a>
+    <a href="#nosotros">Nosotros</a>
   </nav>
   <div class="menu-movil__pie">
     <a class="btn btn--wa btn--ancho" id="waMenu" href="#">
@@ -489,6 +512,7 @@ a{color:inherit;text-decoration:none}
         <button class="filtro" role="tab" data-filtro="mujer" aria-selected="false">Mujer</button>
         <button class="filtro" role="tab" data-filtro="hombre" aria-selected="false">Hombre</button>
         <button class="filtro" role="tab" data-filtro="portalipstick" aria-selected="false">Portalipstick</button>
+        <button class="filtro" role="tab" data-filtro="billetera" aria-selected="false">Billeteras</button>
         <span class="conteo" id="conteo"></span>
       </div>
     </div>
@@ -518,6 +542,24 @@ a{color:inherit;text-decoration:none}
     </div>
   </section>
 
+  <section class="nosotros marco" id="nosotros">
+    <hr class="costura">
+    <div class="nosotros__grilla">
+    <div class="nosotros__caja">
+      <h2>Detrás de Manovia 👋</h2>
+      <p>¡Hola! Somos Sofía y Martín, los creadores detrás de Manovia.</p>
+      <p>Nuestra historia empezó en marzo de 2026 como un sueño compartido: queríamos emprender juntos y crear una marca de marroquinería y accesorios que combinara diseño, calidad y durabilidad.</p>
+      <p>Creemos que los accesorios no son solo complementos, sino piezas que elevan cualquier outfit y te acompañan todos los días. Por eso, diseñamos y seleccionamos cuidadosamente cada producto —desde nuestros cinturones hasta los midoris y porta lipsticks— trabajando con puro cuero y cuidando cada detalle de fabricación.</p>
+      <p>En Manovia nos apasiona lo que hacemos. Detrás de cada paquete que enviamos hay horas de dedicación, diseño y el compromiso de brindarte productos auténticos, modernos y duraderos, acompañados de la mejor atención.</p>
+      <p>Gracias por formar parte de nuestra comunidad y apoyar nuestro emprendimiento. ¡Esperamos que disfrutes de tu pieza Manovia tanto como nosotros disfrutamos creándola!</p>
+      <p class="firma">Sofía y Martín</p>
+    </div>
+    <figure class="nosotros__foto">
+      <img src="img/nosotros.jpg" alt="Sofía y Martín, fundadores de Manovia" loading="lazy">
+    </figure>
+    </div>
+  </section>
+
   <section class="porta" id="portalipstick" aria-label="Portalipstick">
     <div class="porta__texto">
       <h2>Portalipstick</h2>
@@ -542,7 +584,9 @@ a{color:inherit;text-decoration:none}
           <li><a href="#catalogo" data-ir="mujer">Mujer</a></li>
           <li><a href="#catalogo" data-ir="hombre">Hombre</a></li>
           <li><a href="#catalogo" data-ir="portalipstick">Portalipstick</a></li>
+          <li><a href="#catalogo" data-ir="billetera">Billeteras</a></li>
           <li><a href="#taller">El taller</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
         </ul>
       </div>
       <div>
@@ -705,7 +749,28 @@ const PRODUCTOS = [
     detalle:"Portalipstick de cuero liso",
     desc:"Cuero marrón oscuro liso con remaches de bronce y mosquetón. Entra un labial y una llave.",
     colores:[{n:"Marrón",h:"#4a3226"}],
-    talles:[], fotos:["porta-marron.jpg"] }
+    talles:[], fotos:["porta-marron.jpg"] },
+
+  /* ---------- BILLETERAS — sin talle, precios provisorios ----------
+     Misma billetera larga en tres cueros. Si en algún color cambia
+     el precio, editalo en su bloque. */
+  { id:"bill-chocolate", nombre:"Chocolate", seccion:"billetera", precio:42000, provisorio:true,
+    detalle:"Billetera larga, cuero graneado",
+    desc:"Billetera larga en cuero graneado marrón oscuro. Se cierra con dos broches a presión. Adentro tiene compartimento para billetes y ranuras para tarjetas.",
+    colores:[{n:"Marrón oscuro",h:"#3a2a22"}],
+    talles:[], etiqueta:"Nuevo", fotos:["bill-chocolate-1.jpg","bill-chocolate-2.jpg"] },
+
+  { id:"bill-oliva", nombre:"Oliva", seccion:"billetera", precio:42000, provisorio:true,
+    detalle:"Billetera larga, cuero graneado",
+    desc:"Billetera larga en cuero graneado verde militar. Se cierra con dos broches a presión. Adentro tiene compartimento para billetes y ranuras para tarjetas.",
+    colores:[{n:"Verde militar",h:"#4e5340"}],
+    talles:[], etiqueta:"Nuevo", fotos:["bill-oliva-1.jpg","bill-oliva-2.jpg"] },
+
+  { id:"bill-caramelo", nombre:"Caramelo", seccion:"billetera", precio:42000, provisorio:true,
+    detalle:"Billetera larga, cuero liso",
+    desc:"Billetera larga en cuero liso caramelo, de terminación lustrada. Se cierra con dos broches a presión. Adentro tiene compartimento para billetes y ranuras para tarjetas.",
+    colores:[{n:"Caramelo",h:"#a9683a"}],
+    talles:[], etiqueta:"Nuevo", fotos:["bill-caramelo-1.jpg","bill-caramelo-2.jpg"] }
 ];
 
 /* ============================================================
@@ -734,11 +799,11 @@ function marcador(texto){
     texto.toUpperCase() + '</text></svg>';
   return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
 }
-function crearFoto(archivo, alt, clase){
+function crearFoto(archivo, alt, clase, rotulo){
   const img = document.createElement("img");
   img.alt = alt; img.loading = "lazy";
   if (clase) img.className = clase;
-  img.onerror = () => { img.onerror = null; img.src = marcador(alt || "Manovia"); };
+  img.onerror = () => { img.onerror = null; img.src = marcador(rotulo || alt || "Manovia"); };
   img.src = CONFIG.fotos + archivo;
   return img;
 }
@@ -747,12 +812,12 @@ function crearFoto(archivo, alt, clase){
    4. Utilidades
    ============================================================ */
 const $ = s => document.querySelector(s);
-const plata = n => "$" + n.toLocaleString("es-AR");
+const plata = n => n > 0 ? "$" + n.toLocaleString("es-AR") : "Consultar precio";
 const linkWA = texto => "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(texto);
 const producto = id => PRODUCTOS.find(p => p.id === id);
 const ICONO_WA = '<svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.1 1.6 5.9L4 29l8.3-1.6c1.7.9 3.7 1.4 5.7 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-4.4.9.9-4.3-.2-.4c-1-1.6-1.5-3.4-1.5-5.3 0-5.4 4.4-9.8 9.8-9.8s9.8 4.4 9.8 9.8-4.6 10.7-9 10.7zm5.4-7.3c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5s-.7-1.6-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6 1.9.8 2.7.9 3.6.8.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/></svg>';
 
-const SECCION = { mujer:"Mujer", hombre:"Hombre", portalipstick:"Portalipstick" };
+const SECCION = { mujer:"Mujer", hombre:"Hombre", portalipstick:"Portalipstick", billetera:"Billeteras" };
 let bolsa = [];
 let filtroActual = "todos";
 let seleccion = null;
@@ -795,8 +860,8 @@ function pintarGrilla(){
 
     const foto = document.createElement("span");
     foto.className = "ficha__foto";
-    foto.appendChild(crearFoto(p.fotos[0], p.nombre + ", cinturón de cuero", "a"));
-    if (p.fotos[1]) foto.appendChild(crearFoto(p.fotos[1], "", "b"));
+    foto.appendChild(crearFoto(p.fotos[0], p.nombre + " — " + p.detalle, "a", p.nombre));
+    if (p.fotos[1]) foto.appendChild(crearFoto(p.fotos[1], "", "b", p.nombre));
     const add = document.createElement("span");
     add.className = "ficha__add"; add.textContent = "Añadir";
     foto.appendChild(add);
@@ -834,8 +899,8 @@ function abrirProducto(id){
 
   const info = document.createElement("div");
   info.className = "detalle__info";
-  info.innerHTML = "<h2>" + p.nombre + "</h2><div class='detalle__precio'>" + plata(p.precio) +
-                   "</div><p class='detalle__desc'>" + p.desc + "</p>";
+  info.innerHTML = "<h2>" + p.nombre + "</h2><div class='detalle__precio'>" + plata(p.precio) + "</div>" +
+                   (p.desc ? "<p class='detalle__desc'>" + p.desc + "</p>" : "");
 
   /* color */
   const campoColor = document.createElement("div");
