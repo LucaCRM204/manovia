@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="es-AR">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18540877819"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18540877819');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Manovia — Cinturones de cuero</title>
@@ -643,7 +651,13 @@ const CONFIG = {
   whatsapp: "5491159464372",
   mail: "hola@manovia.com.ar",
   saludo: "Hola Manovia! 👋",
-  fotos: "img/"
+  fotos: "img/",
+
+  // Google Ads: pegá acá la etiqueta de conversión completa, con el
+  // formato "AW-18540877819/XXXXXXXXXXXXXXXXXXX". La sacás de
+  // Google Ads > Objetivos > Conversiones > la acción > Configurar la etiqueta.
+  // Si queda vacía no se envía nada y la página funciona igual.
+  conversionAds: ""
 };
 
 /* ============================================================
@@ -829,7 +843,17 @@ function avisar(texto){
   clearTimeout(a._t);
   a._t = setTimeout(() => a.classList.remove("visible"), 2600);
 }
-function abrirWA(texto){ window.open(linkWA(texto), "_blank", "noopener"); }
+function marcarConversion(tipo){
+  if (typeof gtag !== "function") return;
+  gtag("event", "whatsapp_click", { tipo: tipo });          // queda en el historial
+  if (CONFIG.conversionAds){                                 // conversión de Ads
+    gtag("event", "conversion", { send_to: CONFIG.conversionAds });
+  }
+}
+function abrirWA(texto, tipo){
+  marcarConversion(tipo || "consulta");
+  window.open(linkWA(texto), "_blank", "noopener");
+}
 
 /* ============================================================
    5. Grilla
@@ -979,7 +1003,7 @@ function abrirProducto(id){
     "<button class='btn btn--linea btn--ancho' id='consultarProd' style='margin-top:8px'>Preguntar por este modelo</button>";
   $("#sumar").addEventListener("click", () => sumarABolsa(p));
   $("#consultarProd").addEventListener("click", () =>
-    abrirWA(CONFIG.saludo + "\nTengo una consulta sobre el cinturón " + p.nombre + " (" + plata(p.precio) + ")."));
+    abrirWA(CONFIG.saludo + "\nTengo una consulta sobre el cinturón " + p.nombre + " (" + plata(p.precio) + ").", "consulta_producto"));
   if (!sinTalle) $("#dudaTalle").addEventListener("click", () =>
     abrirWA(CONFIG.saludo + "\nNo sé qué talle pedir del modelo " + p.nombre + ". ¿Me ayudan?"));
 
@@ -1069,7 +1093,7 @@ function pintarBolsa(){
     "<button class='btn btn--wa btn--ancho' id='cerrarCompra'>" + ICONO_WA + "Terminar por WhatsApp</button>" +
     "<p class='nota-pie'>Se abre WhatsApp con tu pedido ya escrito. Coordinamos pago y envío por ahí.</p>" +
     "<button class='seguir' id='seguir'>Seguir viendo</button>";
-  $("#cerrarCompra").addEventListener("click", () => abrirWA(armarMensaje()));
+  $("#cerrarCompra").addEventListener("click", () => abrirWA(armarMensaje(), "pedido"));
   $("#seguir").addEventListener("click", cerrarPaneles);
 }
 
@@ -1124,6 +1148,7 @@ function aplicarFiltro(f){
   const general = linkWA(CONFIG.saludo + "\nTengo una consulta sobre los cinturones.");
   ["#waHeader", "#waMenu", "#waFlotante", "#waPie"].forEach(sel => {
     const el = $(sel); el.href = general; el.target = "_blank"; el.rel = "noopener";
+    el.addEventListener("click", () => marcarConversion("consulta_" + sel.slice(3).toLowerCase()));
   });
   $("#mailPie").href = "mailto:" + CONFIG.mail;
   $("#mailPie").textContent = CONFIG.mail;
