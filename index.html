@@ -276,6 +276,27 @@ a{color:inherit;text-decoration:none}
   .porta figure{aspect-ratio:auto;height:100%}
 }
 
+/* ---------- newsletter ---------- */
+.news{background:var(--hueso);padding-top:52px;padding-bottom:58px}
+@media (min-width:900px){ .news{padding-top:80px;padding-bottom:88px} }
+.news__caja{max-width:48ch}
+.news h2{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(26px,5.5vw,38px);line-height:1.06;
+}
+.news p{margin-top:12px;color:var(--gris);font-size:14.5px}
+.news form{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap}
+.news input{
+  flex:1 1 230px;min-height:50px;padding:0 16px;
+  border:1px solid var(--linea);background:var(--papel);
+  font:inherit;font-size:15px;color:var(--bordo-900);border-radius:0;
+}
+.news input::placeholder{color:var(--gris)}
+.news input:focus{outline:2px solid var(--carmin);outline-offset:-1px}
+.news .btn{flex:0 0 auto}
+.news__ok{margin-top:14px;font-size:14px;color:var(--bordo);display:none}
+.news__ok.visible{display:block}
+
 /* ---------- pie ---------- */
 .pie{background:var(--bordo-900);color:var(--rosa-claro);padding:56px 0 28px}
 .pie__grilla{display:grid;gap:34px}
@@ -577,6 +598,17 @@ a{color:inherit;text-decoration:none}
     <figure><img src="img/porta-azul-2.jpg" alt="Portalipstick de gamuza azul con flecos colgado de un bolso" loading="lazy"></figure>
     <figure><img src="img/porta-bordo.jpg" alt="Portalipstick de gamuza bordó con estrella colgado de un bolso" loading="lazy"></figure>
   </section>
+  <section class="news marco" id="novedades">
+    <div class="news__caja">
+      <h2>Enterate de lo nuevo</h2>
+      <p>Dejanos tu mail y te avisamos cuando sale una serie nueva o hay algo con descuento. Sin spam.</p>
+      <form id="form-newsletter" novalidate="false">
+        <input type="email" id="news-email" name="email" placeholder="tu@mail.com" required autocomplete="email" aria-label="Tu correo electrónico">
+        <button type="submit" class="btn">Suscribirme</button>
+      </form>
+      <p class="news__ok" id="newsOk">¡Gracias por suscribirte! Te abrimos WhatsApp para confirmar.</p>
+    </div>
+  </section>
 </main>
 
 <footer class="pie">
@@ -602,6 +634,7 @@ a{color:inherit;text-decoration:none}
         <ul>
           <li><a href="#" id="waPie">WhatsApp</a></li>
           <li><a href="https://instagram.com/manovia.ar" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.tiktok.com/@manovia_ar" target="_blank" rel="noopener">TikTok</a></li>
           <li><a href="#" id="mailPie">hola@manovia.com.ar</a></li>
         </ul>
       </div>
@@ -1153,6 +1186,20 @@ function aplicarFiltro(f){
   $("#mailPie").href = "mailto:" + CONFIG.mail;
   $("#mailPie").textContent = CONFIG.mail;
   $("#dudaGeneral").addEventListener("click", () => abrirWA(CONFIG.saludo + "\nTengo una consulta sobre los cinturones."));
+  /* Newsletter: empuja newsletter_ok al dataLayer (lo lee GTM) y manda
+     el mail por WhatsApp, así no se pierde ningún suscriptor. */
+  const formNews = $("#form-newsletter");
+  formNews.addEventListener("submit", e => {
+    e.preventDefault();                       // sin esto la página recarga y GTM no llega a leer el evento
+    const mail = $("#news-email").value.trim();
+    if (!mail) return;
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "newsletter_ok" });
+    $("#newsOk").classList.add("visible");
+    formNews.reset();
+    window.open(linkWA(CONFIG.saludo + "\nQuiero sumarme a las novedades.\nMi mail: " + mail), "_blank", "noopener");
+  });
+
   $("#verSquad").addEventListener("click", () => abrirWA(CONFIG.saludo + "\nLes mando una foto de mi cinturón para el #manoviasquad 📸"));
 
   document.querySelectorAll(".filtro").forEach(b => b.addEventListener("click", () => aplicarFiltro(b.dataset.filtro)));
